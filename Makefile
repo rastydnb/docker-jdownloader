@@ -16,13 +16,13 @@ build: qemu-arm-static qemu-aarch64-static
 			image=larmog\\/armhf-alpine-java:jdk-8u73; \
 		elif [ $(arch) = arm64v8 ]; \
 			then archi=arm64; \
-			image=${arch}\\/openjdk:jre-alpine; \
+			image=larmog\\/armhf-alpine-java:jdk-8u73; \
 		else \
 			archi=$(arch); \
 			image=${arch}\\/openjdk:jre-alpine; \
 		fi; \
 		cat Dockerfile | sed "s/FROM openjdk:jre-alpine/FROM $$image/g" > .Dockerfile; \
-		docker build -t jaymoulin/jdownloader:${VERSION}-$(arch) -f .Dockerfile --build-arg ARCH=$${archi} ${CACHE} --build-arg VERSION=${VERSION} .;\
+		docker build -t jaymoulin/jdownloader:${VERSION}-$(arch) -f .Dockerfile --build-arg ARCH=$${archi} ${CACHE} --build-arg VERSION=${VERSION}-$(arch) .;\
 	)
 publish:
 	docker push jaymoulin/jdownloader
